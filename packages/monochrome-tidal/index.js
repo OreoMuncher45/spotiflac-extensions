@@ -1,13 +1,50 @@
-var config = { baseUrl: "https://monochrome.tf" };
+var DEFAULT_API_URLS = [
+  "https://monochrome-api.samidy.com",
+  "https://api.monochrome.tf",
+  "https://wolf.qqdl.site",
+  "https://maus.qqdl.site",
+  "https://vogel.qqdl.site",
+  "https://katze.qqdl.site",
+  "https://hund.qqdl.site",
+  "https://tidal.kinoplus.online"
+];
+var config = { preferredApiUrl: DEFAULT_API_URLS[0] };
 
 function text(value, fallback) {
   return value == null ? (fallback || "") : String(value);
 }
 
-function requestJSON(url, options) {
-  var response = http.get(url, options || { headers: { Accept: "application/json" } });
-  if (!response || !response.ok) throw new Error("Monochrome HTTP request failed");
-  return JSON.parse(response.body);
+function apiUrls() {
+  var urls = [];
+  var preferred = String(config.preferredApiUrl || "").replace(/\/$/, "");
+  if (preferred) urls.push(preferred);
+  DEFAULT_API_URLS.forEach(function (url) {
+    if (urls.indexOf(url) < 0) urls.push(url);
+  });
+  return urls;
+}
+
+function requestJSON(path, options) {
+  var lastError = "no API candidates";
+  var candidates = apiUrls();
+  for (var i = 0; i < candidates.length; i++) {
+    try {
+      var response = http.get(candidates[i] + path, options || { headers: { Accept: "application/json" } });
+      if (!response || !response.ok) {
+        lastError = candidates[i] + " returned HTTP " + (response && response.status);
+        continue;
+      }
+      var contentType = String(response.headers && (response.headers["content-type"] || response.headers["Content-Type"]) || "").toLowerCase();
+      if (contentType && contentType.indexOf("json") < 0) {
+        lastError = candidates[i] + " returned " + contentType;
+        continue;
+      }
+      return JSON.parse(response.body);
+    } catch (error) {
+      lastError = candidates[i] + ": " + String(error);
+    }
+  }
+  throw new Error("All Monochrome API instances failed: " + lastError);
 }
 
 function itemsAt(root, key) {
@@ -48,11 +85,11 @@ function track(item) {
 
 function initialize(settings) {
   settings = settings || {};
-  config.baseUrl = String(settings.baseUrl || config.baseUrl).replace(/\/$/, "");
+  config.preferredApiUrl = String(settings.preferredApiUrl || config.preferredApiUrl).replace(/\/$/, "");
 }
 
 function searchTracks(query, limit) {
-  var root = requestJSON(config.baseUrl + "/search/?s=" + encodeURIComponent(query) + "&limit=" + String(limit || 25));
+  var root = requestJSON("/search/?s=" + encodeURIComponent(query) + "&limit=" + String(limit || 25));
   var tracks = itemsAt(root, "tracks").map(track).filter(function (item) { return item !== null; });
   return { tracks: tracks, total: tracks.length };
 }
@@ -67,7 +104,7 @@ function normalized(value) {
 
 function resolveTrack(trackName, artistName, durationMs) {
   var query = String(artistName || "") + " " + String(trackName || "");
-  var root = requestJSON(config.baseUrl + "/search/?s=" + encodeURIComponent(query) + "&limit=25");
+  var root = requestJSON("/search/?s=" + encodeURIComponent(query) + "&limit=25");
   var candidates = itemsAt(root, "tracks");
   var wantedTitle = normalized(trackName);
   var wantedArtist = normalized(artistName);
@@ -110,13 +147,13 @@ function checkAvailability(isrc, trackName, artistName, options) {
 }
 
 function getTrack(id) {
-  var root = requestJSON(config.baseUrl + "/track/?id=" + encodeURIComponent(id));
+  var root = requestJSON("/track/?id=" + encodeURIComponent(id));
   var data = root && root.data;
   return track(data && (data.track || data));
 }
 
 function download(id, quality, outputPath, onProgress) {
-  var root = requestJSON(config.baseUrl + "/track/?id=" + encodeURIComponent(id) + "&quality=" + encodeURIComponent(quality || "LOSSLESS"));
+  var root = requestJSON("/track/?id=" + encodeURIComponent(id) + "&quality=" + encodeURIComponent(quality || "LOSSLESS"));
   var data = root && root.data;
   if (!data || !data.manifest) return { success: false, error: "No stream manifest returned" };
   var manifest = String(data.manifest);

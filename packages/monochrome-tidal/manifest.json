@@ -1,13 +1,25 @@
 {
   "name": "monochrome-tidal",
   "displayName": "Monochrome TIDAL",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Community metadata and download adapter for a Monochrome TIDAL-compatible JSON service.",
   "homepage": "https://github.com/OreoMuncher45/spotiflac-extensions",
   "type": ["metadata_provider", "download_provider"],
   "minAppVersion": "4.2.3",
   "permissions": {
-    "network": ["monochrome.tf", "resources.tidal.com", "*.tidal.com", "*.akamaized.net"],
+    "network": [
+      "monochrome-api.samidy.com",
+      "api.monochrome.tf",
+      "wolf.qqdl.site",
+      "maus.qqdl.site",
+      "vogel.qqdl.site",
+      "katze.qqdl.site",
+      "hund.qqdl.site",
+      "tidal.kinoplus.online",
+      "resources.tidal.com",
+      "*.tidal.com",
+      "*.akamaized.net"
+    ],
     "storage": false,
     "file": true
   },
@@ -28,11 +40,11 @@
   },
   "settings": [
     {
-      "key": "baseUrl",
-      "label": "Service Base URL",
+      "key": "preferredApiUrl",
+      "label": "Preferred API URL",
       "type": "string",
-      "default": "https://monochrome.tf",
-      "description": "Base URL for a Monochrome-compatible JSON API. Use a private compatible instance if the public web route returns HTML."
+      "default": "https://monochrome-api.samidy.com",
+      "description": "Optional first API candidate. The extension falls back through the official and community API list when it is unavailable. Do not use a UI URL such as monochrome.tf."
     }
   ]
 }

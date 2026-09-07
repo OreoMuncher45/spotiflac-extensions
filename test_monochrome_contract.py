@@ -22,6 +22,20 @@ assert "prepared_context" in source
 assert "monochromeTrackId" in source
 assert manifest["searchBehavior"]["enabled"] is True
 assert manifest["permissions"]["file"] is True
+assert manifest["version"] == "0.2.0"
+assert len(manifest["permissions"]["network"]) >= 8
+assert "monochrome.tf" not in manifest["permissions"]["network"]
+for host in [
+    "monochrome-api.samidy.com",
+    "api.monochrome.tf",
+    "wolf.qqdl.site",
+    "maus.qqdl.site",
+    "vogel.qqdl.site",
+    "katze.qqdl.site",
+    "hund.qqdl.site",
+    "tidal.kinoplus.online",
+]:
+    assert host in source
 assert source.count("{") == source.count("}")
 assert source.count("(") == source.count(")")
 

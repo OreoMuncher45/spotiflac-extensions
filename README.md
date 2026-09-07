@@ -14,7 +14,7 @@ The repository contains `.sflx` packages using SpotiFLAC Mobile's extension form
 
 ## Extensions
 
-- `monochrome-tidal`: metadata and download adapter for a Monochrome/TIDAL-compatible JSON service. Configure the service base URL in the extension settings. The adapter includes the required `checkAvailability` hook and resolves tracks selected from another search provider by title, artist, and duration before downloading. The default public `monochrome.tf` web route currently serves HTML rather than API JSON, so use an active compatible API instance.
+- `monochrome-tidal`: metadata and download adapter for Monochrome/TIDAL-compatible JSON APIs. It tries all eight API candidates listed by the Monochrome project, starting with `monochrome-api.samidy.com`, and skips UI-only hosts such as `monochrome.tf`. Configure **Preferred API URL** to change the first candidate. The adapter includes the required `checkAvailability` hook and resolves tracks selected from another search provider by title, artist, and duration.
 - `qobuz-official`: credential-driven Qobuz adapter scaffold. It is disabled until a compatible private API gateway and valid account credentials are configured.
 - `ytmusic-spotiflac`: the official upstream YouTube Music extension, linked directly from the SpotiFLAC extension project. It provides YouTube Music search, album/artist/playlist browsing, downloads, and a recommendation home feed.
 

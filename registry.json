@@ -6,10 +6,10 @@
       "id": "monochrome-tidal",
       "name": "monochrome-tidal",
       "display_name": "Monochrome TIDAL",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "description": "Community metadata and download adapter for a Monochrome TIDAL-compatible JSON service.",
       "download_url": "https://raw.githubusercontent.com/OreoMuncher45/spotiflac-extensions/main/extensions/monochrome-tidal.sflx",
-      "sha256": "721ec49779f36d7932efdc19d3fac189598ad8904db0fbc3a9100747f2be9b3d",
+      "sha256": "f593e284d75ce17144b068aed85bb1f04ac8dc17bc09a77448cb51f8cf3d87a5",
       "category": "download",
       "tags": [
         "metadata",
