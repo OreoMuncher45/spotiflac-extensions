@@ -1,13 +1,13 @@
 {
   "name": "monochrome-tidal",
   "displayName": "Monochrome TIDAL",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Community metadata and download adapter for a Monochrome TIDAL-compatible JSON service.",
   "homepage": "https://github.com/OreoMuncher45/spotiflac-extensions",
   "type": ["metadata_provider", "download_provider"],
   "minAppVersion": "4.2.3",
   "permissions": {
-    "network": ["monochrome.tf"],
+    "network": ["monochrome.tf", "resources.tidal.com", "*.tidal.com", "*.akamaized.net"],
     "storage": false,
     "file": true
   },

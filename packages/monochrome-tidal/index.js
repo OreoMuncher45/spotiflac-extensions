@@ -10,6 +10,18 @@ function requestJSON(url, options) {
   return JSON.parse(response.body);
 }
 
+function itemsAt(root, key) {
+  var data = root && root.data;
+  if (Array.isArray(data)) return data;
+  if (!data || typeof data !== "object") return [];
+  var value = data[key];
+  if (Array.isArray(value)) return value;
+  if (value && Array.isArray(value.items)) return value.items;
+  if (Array.isArray(data.items)) return data.items;
+  if (Array.isArray(data.results)) return data.results;
+  return [];
+}
+
 function cover(value) {
   if (!value) return null;
   value = String(value);
@@ -41,14 +53,25 @@ function initialize(settings) {
 
 function searchTracks(query, limit) {
   var root = requestJSON(config.baseUrl + "/search/?s=" + encodeURIComponent(query) + "&limit=" + String(limit || 25));
-  var data = root && root.data;
-  var items = Array.isArray(data) ? data : (data && (data.tracks || data.items || data.results)) || [];
-  var tracks = items.map(track).filter(function (item) { return item !== null; });
+  var tracks = itemsAt(root, "tracks").map(track).filter(function (item) { return item !== null; });
   return { tracks: tracks, total: tracks.length };
 }
 
 function customSearch(query, options) {
   return searchTracks(query, (options && options.limit) || 25).tracks;
+}
+
+function checkAvailability(isrc, trackName, artistName, options) {
+  var track = options && options.track;
+  var id = track && (track.id || track.provider_id);
+  if (!id) return { available: false, reason: "Monochrome search result has no track ID" };
+  return { available: true, reason: "track ID available", trackId: String(id), skipFallback: true };
+}
+
+function getTrack(id) {
+  var root = requestJSON(config.baseUrl + "/track/?id=" + encodeURIComponent(id));
+  var data = root && root.data;
+  return track(data && (data.track || data));
 }
 
 function download(id, quality, outputPath, onProgress) {
@@ -66,4 +89,11 @@ function download(id, quality, outputPath, onProgress) {
   return file.download(url, outputPath, { onProgress: onProgress, resume: true });
 }
 
-registerExtension({ initialize: initialize, searchTracks: searchTracks, customSearch: customSearch, download: download });
+registerExtension({
+  initialize: initialize,
+  searchTracks: searchTracks,
+  customSearch: customSearch,
+  getTrack: getTrack,
+  checkAvailability: checkAvailability,
+  download: download
+});
