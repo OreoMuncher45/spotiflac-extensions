@@ -1,0 +1,34 @@
+{
+  "name": "monochrome-tidal",
+  "displayName": "Monochrome TIDAL",
+  "version": "0.1.0",
+  "description": "Community metadata and download adapter for a Monochrome TIDAL-compatible JSON service.",
+  "homepage": "https://github.com/OreoMuncher45/spotiflac-extensions",
+  "type": ["metadata_provider", "download_provider"],
+  "minAppVersion": "4.2.3",
+  "permissions": {
+    "network": ["monochrome.tf"],
+    "storage": false,
+    "file": true
+  },
+  "qualityOptions": [
+    { "id": "LOSSLESS", "label": "Lossless", "description": "Request lossless audio" },
+    { "id": "HIGH", "label": "High", "description": "Request high quality audio" },
+    { "id": "LOW", "label": "Low", "description": "Request low quality audio" }
+  ],
+  "searchBehavior": {
+    "enabled": true,
+    "placeholder": "Search Monochrome...",
+    "primary": false,
+    "thumbnailRatio": "square"
+  },
+  "settings": [
+    {
+      "key": "baseUrl",
+      "label": "Service Base URL",
+      "type": "string",
+      "default": "https://monochrome.tf",
+      "description": "Base URL for a Monochrome-compatible JSON API. Use a private compatible instance if the public web route returns HTML."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "updated_at": "2026-09-07T00:00:00Z",
+  "extensions": [
+    {
+      "id": "monochrome-tidal",
+      "name": "monochrome-tidal",
+      "display_name": "Monochrome TIDAL",
+      "version": "0.1.0",
+      "description": "Community metadata and download adapter for a Monochrome TIDAL-compatible JSON service.",
+      "download_url": "https://raw.githubusercontent.com/OreoMuncher45/spotiflac-extensions/main/extensions/monochrome-tidal.sflx",
+      "sha256": "fbabb5f48bf3b45f5620524904962ed8f4567ea9c253404bfe0e639062b23593",
+      "category": "download",
+      "tags": [
+        "metadata",
+        "download",
+        "lossless"
+      ],
+      "min_app_version": "4.2.3"
+    },
+    {
+      "id": "qobuz-official",
+      "name": "qobuz-official",
+      "display_name": "Qobuz Official API",
+      "version": "0.1.0",
+      "description": "Credential-driven Qobuz metadata and download adapter for a private compatible API gateway.",
+      "download_url": "https://raw.githubusercontent.com/OreoMuncher45/spotiflac-extensions/main/extensions/qobuz-official.sflx",
+      "sha256": "6b6d99b8884ee82234defe30cf063604465d9ab5b640d3dbd4bbe4b14f955893",
+      "category": "download",
+      "tags": [
+        "metadata",
+        "download",
+        "lossless"
+      ],
+      "min_app_version": "4.2.3"
+    }
+  ]
+}

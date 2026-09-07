@@ -1,0 +1,23 @@
+{
+  "name": "qobuz-official",
+  "displayName": "Qobuz Official API",
+  "version": "0.1.0",
+  "description": "Credential-driven Qobuz metadata and download adapter for a private compatible API gateway.",
+  "homepage": "https://github.com/OreoMuncher45/spotiflac-extensions",
+  "type": ["metadata_provider", "download_provider"],
+  "minAppVersion": "4.2.3",
+  "permissions": {
+    "network": ["api.qobuz.com", "www.qobuz.com", "play.qobuz.com"],
+    "storage": false,
+    "file": true
+  },
+  "qualityOptions": [
+    { "id": "LOSSLESS", "label": "Lossless", "description": "Request Qobuz lossless audio" },
+    { "id": "HI_RES", "label": "Hi-Res", "description": "Request Qobuz hi-res audio" }
+  ],
+  "settings": [
+    { "key": "apiBase", "label": "Private API Base URL", "type": "string", "description": "A private gateway that implements the documented adapter contract.", "required": true },
+    { "key": "appId", "label": "Qobuz App ID", "type": "string", "secret": true },
+    { "key": "userAuthToken", "label": "Qobuz User Auth Token", "type": "string", "secret": true }
+  ]
+}
