@@ -42,6 +42,19 @@ for package in sorted((root / "packages").iterdir()):
         "tags": ["metadata", "download", "lossless"],
         "min_app_version": manifest.get("minAppVersion", "4.2.3"),
     })
+entries.append({
+    "id": "ytmusic-spotiflac",
+    "name": "ytmusic-spotiflac",
+    "display_name": "YouTube Music",
+    "version": "2.4.1",
+    "description": "Official YouTube Music metadata, custom search, home recommendations, and download provider for SpotiFLAC Mobile.",
+    "download_url": "https://raw.githubusercontent.com/spotiflacapp/SpotiFLAC-Extension/main/extensions/ytmusic-spotiflac.sflx",
+    "sha256": "da7e41e45a73e52d2f40507e30372383c8f13872132e36af69f7a69fef01ebbb",
+    "icon_url": "https://raw.githubusercontent.com/spotiflacapp/SpotiFLAC-Extension/main/icons/ytmusic-spotiflac.jpg",
+    "category": "download",
+    "tags": ["youtube", "youtube-music", "search", "home-feed", "recommendations", "download"],
+    "min_app_version": "4.5.1",
+})
 (root / "registry.json").write_text(json.dumps({
     "version": 1,
     "updated_at": "2026-09-07T00:00:00Z",

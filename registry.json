@@ -6,10 +6,10 @@
       "id": "monochrome-tidal",
       "name": "monochrome-tidal",
       "display_name": "Monochrome TIDAL",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Community metadata and download adapter for a Monochrome TIDAL-compatible JSON service.",
       "download_url": "https://raw.githubusercontent.com/OreoMuncher45/spotiflac-extensions/main/extensions/monochrome-tidal.sflx",
-      "sha256": "fbabb5f48bf3b45f5620524904962ed8f4567ea9c253404bfe0e639062b23593",
+      "sha256": "a796cc49e9b342dc82d5aff9bf746e05796bcfdff48108894415c99fc321b49a",
       "category": "download",
       "tags": [
         "metadata",
@@ -22,10 +22,10 @@
       "id": "qobuz-official",
       "name": "qobuz-official",
       "display_name": "Qobuz Official API",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Credential-driven Qobuz metadata and download adapter for a private compatible API gateway.",
       "download_url": "https://raw.githubusercontent.com/OreoMuncher45/spotiflac-extensions/main/extensions/qobuz-official.sflx",
-      "sha256": "6b6d99b8884ee82234defe30cf063604465d9ab5b640d3dbd4bbe4b14f955893",
+      "sha256": "e1e895a62635c64958b62742cc04bb5dc7c80fa59a399beaf3120488b77f4814",
       "category": "download",
       "tags": [
         "metadata",
@@ -33,6 +33,26 @@
         "lossless"
       ],
       "min_app_version": "4.2.3"
+    },
+    {
+      "id": "ytmusic-spotiflac",
+      "name": "ytmusic-spotiflac",
+      "display_name": "YouTube Music",
+      "version": "2.4.1",
+      "description": "Official YouTube Music metadata, custom search, home recommendations, and download provider for SpotiFLAC Mobile.",
+      "download_url": "https://raw.githubusercontent.com/spotiflacapp/SpotiFLAC-Extension/main/extensions/ytmusic-spotiflac.sflx",
+      "sha256": "da7e41e45a73e52d2f40507e30372383c8f13872132e36af69f7a69fef01ebbb",
+      "icon_url": "https://raw.githubusercontent.com/spotiflacapp/SpotiFLAC-Extension/main/icons/ytmusic-spotiflac.jpg",
+      "category": "download",
+      "tags": [
+        "youtube",
+        "youtube-music",
+        "search",
+        "home-feed",
+        "recommendations",
+        "download"
+      ],
+      "min_app_version": "4.5.1"
     }
   ]
 }

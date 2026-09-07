@@ -1,7 +1,7 @@
 {
   "name": "monochrome-tidal",
   "displayName": "Monochrome TIDAL",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Community metadata and download adapter for a Monochrome TIDAL-compatible JSON service.",
   "homepage": "https://github.com/OreoMuncher45/spotiflac-extensions",
   "type": ["metadata_provider", "download_provider"],
@@ -19,8 +19,12 @@
   "searchBehavior": {
     "enabled": true,
     "placeholder": "Search Monochrome...",
-    "primary": false,
-    "thumbnailRatio": "square"
+    "primary": true,
+    "thumbnailRatio": "square",
+    "filters": [
+      { "id": "track", "label": "Songs", "icon": "music" },
+      { "id": "album", "label": "Albums", "icon": "album" }
+    ]
   },
   "settings": [
     {
