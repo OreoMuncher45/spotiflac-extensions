@@ -61,11 +61,52 @@ function customSearch(query, options) {
   return searchTracks(query, (options && options.limit) || 25).tracks;
 }
 
+function normalized(value) {
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/^\s+|\s+$/g, "");
+}
+
+function resolveTrack(trackName, artistName, durationMs) {
+  var query = String(artistName || "") + " " + String(trackName || "");
+  var root = requestJSON(config.baseUrl + "/search/?s=" + encodeURIComponent(query) + "&limit=25");
+  var candidates = itemsAt(root, "tracks");
+  var wantedTitle = normalized(trackName);
+  var wantedArtist = normalized(artistName);
+  var best = null;
+  var bestScore = -1;
+
+  candidates.forEach(function (item) {
+    var parsed = track(item);
+    if (!parsed) return;
+    var titleScore = normalized(parsed.name) === wantedTitle ? 2 : 0;
+    var artistScore = normalized(parsed.artists).indexOf(wantedArtist) >= 0 || wantedArtist.indexOf(normalized(parsed.artists)) >= 0 ? 2 : 0;
+    var candidateDuration = Number(parsed.duration_ms || 0);
+    var durationScore = !durationMs || !candidateDuration || Math.abs(candidateDuration - Number(durationMs)) <= 12000 ? 1 : 0;
+    var score = titleScore + artistScore + durationScore;
+    if (score > bestScore) {
+      best = parsed;
+      bestScore = score;
+    }
+  });
+
+  if (!best || bestScore < 4) return null;
+  return best;
+}
+
 function checkAvailability(isrc, trackName, artistName, options) {
   var track = options && options.track;
-  var id = track && (track.id || track.provider_id);
-  if (!id) return { available: false, reason: "Monochrome search result has no track ID" };
-  return { available: true, reason: "track ID available", trackId: String(id), skipFallback: true };
+  if (track && track.provider_id === "monochrome-tidal" && track.id) {
+    return { available: true, reason: "Monochrome track ID available", trackId: String(track.id), skipFallback: true };
+  }
+
+  var resolved = resolveTrack(trackName, artistName, options && options.duration_ms);
+  if (!resolved) return { available: false, reason: "No matching Monochrome track" };
+  return {
+    available: true,
+    reason: "Matched by title, artist, and duration",
+    trackId: String(resolved.id),
+    skipFallback: true,
+    prepared_context: { monochromeTrackId: String(resolved.id) }
+  };
 }
 
 function getTrack(id) {

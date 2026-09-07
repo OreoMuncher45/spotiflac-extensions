@@ -9,7 +9,7 @@
       "version": "0.1.2",
       "description": "Community metadata and download adapter for a Monochrome TIDAL-compatible JSON service.",
       "download_url": "https://raw.githubusercontent.com/OreoMuncher45/spotiflac-extensions/main/extensions/monochrome-tidal.sflx",
-      "sha256": "4c7d1cb6e252b7ea64baf922d556513dbbc72ebacb0e45e0b44f5e9dd963e2d2",
+      "sha256": "721ec49779f36d7932efdc19d3fac189598ad8904db0fbc3a9100747f2be9b3d",
       "category": "download",
       "tags": [
         "metadata",
